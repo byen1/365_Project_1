@@ -1,12 +1,31 @@
 Duties:
 
 Brandon:
-
-
+	Mul
+	Div
+	Rem
+	And
+	Or
+	Xor
+	Neg
 
 Austyn:
-
+	Not
+	Goto
+	If[]
+	If[]
+	Dup
+	Print
+	Dump
+	Push
 
 
 Charlie:
 	Read in
+	Exit
+	Swap
+	Inpt
+	Nop
+	Pop
+	Add
+	Sub

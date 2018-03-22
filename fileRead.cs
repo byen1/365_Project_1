@@ -4,10 +4,12 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 public class fileRead{
-	public static Dictionary <string, Label> labels;
-
+	private static Dictionary <string, Label> labels;
+	public List <IInstruction> encodedInstrs;
+	
 	public fileRead(string filename){
 		labels = new Dictionary <string,Label>();
+		encodedInstrs = new List <IInstruction>();
 
 		labelsLocater(filename);
 //		foreach(KeyValuePair<string,Label> label in labels){
@@ -54,17 +56,17 @@ public class fileRead{
 					arg = match.Groups[2].Value;
 					
 					if(Int32.TryParse(arg, out conversion)){
-						createObject(command,conversion);
+						encodedInstrs.Add(createObject(command,conversion));
 					}else if(arg.Length > 2 && arg[0] == '0' && arg[1] == 'x'){
 						arg = arg.Substring(2);
 						if(Int32.TryParse(arg,System.Globalization.NumberStyles.HexNumber, null, out hexConv))
-							createObject(command,hexConv);
+							encodedInstrs.Add(createObject(command,hexConv));
 					}else{
-						createObject(command,labels[arg].Address);
+						encodedInstrs.Add(createObject(command,labels[arg].Address));
 					}
 				}else{ //The line is only one word
 					Match match2 = Regex.Match(line,@"[\s]*([A-Za-z0-9\-]+)[\s]*$");
-					createObject(match2.Groups[1].Value,0);
+					encodedInstrs.Add(createObject(match2.Groups[1].Value,0));
 				}
 			}
 		}
@@ -75,6 +77,7 @@ public class fileRead{
 		switch(comm){
 			case "exit":
 				retVal = new Exit(valToUse) as IInstruction;
+				Console.WriteLine($"Hex Value of Exit 121: {retVal.Val,10:X8}");
 				break;
 			/*case "swap":
 				retVal = new Swap() as IInstruction;

@@ -9,11 +9,10 @@ public class Exit : IInstruction{
 
 	public uint Val{
 		get{
-			return (uint) arg * 2;
+			uint retVal = 0 | (uint) arg;
+
+			return retVal;
 		}
 
 	}
-	
-
-
 }

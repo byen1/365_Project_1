@@ -3,9 +3,9 @@ using System;
 public class Label : ILabel{
 	
 	private string labelName;
-	private uint labAddr;
+	private int labAddr;
 
-	public Label(string labName, uint addr){
+	public Label(string labName, int addr){
 		labelName = labName;
 		labAddr = addr;
 	}
@@ -16,7 +16,7 @@ public class Label : ILabel{
 		}
 	}
 
-	public uint Address{
+	public int Address{
 		get{
 			return labAddr;
 		}	

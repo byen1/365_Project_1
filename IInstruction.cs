@@ -1,6 +1,6 @@
 using System;
 
-interface IInstruction{
+public interface IInstruction{
 
 	uint Val{get;}
 

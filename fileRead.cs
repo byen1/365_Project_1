@@ -4,34 +4,22 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 public class fileRead{
-	
-	public static Dictionary<string,int> commands = new Dictionary<string,int>
-	{
-		{"push",0},{"dump",1},{"print",2},{"dup",3},
-		{"ifez",4},{"ifnz",5},{"ifmi",6},{"ifpl",7},
-		{"ifeq",8},{"ifne",9},{"iflt",10},{"ifgt",11},
-		{"ifle",12},{"ifge",13},{"goto",14},{"not",15},
-		{"neg",16},{"xor",17},{"or",18},{"and",19},
-		{"rem",20},{"div",21},{"mul",22},{"sub",23},
-		{"add",24},{"pop",25},{"nop",26},{"inpt",27},
-		{"swap",28},{"exit",29}
-	};
-
-	public static Dictionary<string,int> labels;
+	public static Dictionary <string, Label> labels;
 
 	public fileRead(string filename){
-		labels = new Dictionary<string,int>();
+		labels = new Dictionary <string,Label>();
 
 		labelsLocater(filename);
-		foreach(KeyValuePair<string, int> label in labels){
-			Console.WriteLine($"Label: {label.Key} with address {label.Value}");
-		}
+//		foreach(KeyValuePair<string,Label> label in labels){
+//			Console.WriteLine($"Label: {label.Key} with address {label.Value.Address}");
+//		}
 		instructionExtractor(filename);
 
 	}
 
 	private void labelsLocater(string filename){
 		string line;
+		int labelAddr = 0;
 		using(var sr = new StreamReader(File.OpenRead(filename))){ //First pass through to get labels and "addresses"
 			while(sr.Peek() >= 0){
 				line = sr.ReadLine();
@@ -42,7 +30,8 @@ public class fileRead{
 				
 				Match match = Regex.Match(line,@"[\s]*([A-Za-z0-9\-]+):[\s]*$");
 				if(match.Success)
-					labels.Add(match.Groups[1].Value,11111);
+					labels.Add(match.Groups[1].Value, new Label(match.Groups[1].Value,labelAddr));
+				labelAddr += 4;
 			}
 		}
 	}
@@ -65,20 +54,117 @@ public class fileRead{
 					arg = match.Groups[2].Value;
 					
 					if(Int32.TryParse(arg, out conversion)){
-						Console.WriteLine($"{command}   {arg} : {conversion}");
+						createObject(command,conversion);
 					}else if(arg.Length > 2 && arg[0] == '0' && arg[1] == 'x'){
 						arg = arg.Substring(2);
 						if(Int32.TryParse(arg,System.Globalization.NumberStyles.HexNumber, null, out hexConv))
-							Console.WriteLine($"{command}   {arg} => {hexConv}");
+							createObject(command,hexConv);
 					}else{
-						Console.WriteLine($"{command}   {arg}: Some sort of label");
+						createObject(command,labels[arg].Address);
 					}
 				}else{ //The line is only one word
 					Match match2 = Regex.Match(line,@"[\s]*([A-Za-z0-9\-]+)[\s]*$");
-					Console.WriteLine(match2.Groups[1].Value);
+					createObject(match2.Groups[1].Value,0);
 				}
 			}
 		}
+	}
+
+	private IInstruction createObject(string comm, int valToUse){
+		IInstruction retVal = null;
+		switch(comm){
+			case "exit":
+				retVal = new Exit(valToUse) as IInstruction;
+				break;
+			/*case "swap":
+				retVal = new Swap() as IInstruction;
+				break;
+			case "inpt":
+				retVal = new Inpt() as IInstruction;
+				break;
+			case "nop":
+				retVal = new Nop() as IInstruction;
+				break;
+			case "pop":
+				retVal = new Pop() as IInstruction;
+				break;
+			case "add":
+				retVal = new Add() as IInstruction;
+				break;
+			case "sub":
+				retVal = new Sub() as IInstruction;
+				break;
+			case "mul":
+				retVal = new Mul() as IInstruction;
+				break;
+			case "div":
+				retVal = new Div() as IInstruction;
+				break;
+			case "rem":
+				retVal = new Rem() as IInstruction;
+				break;
+			case "and":
+				retVal = new And() as IInstruction;
+				break;
+			case "or":
+				retVal = new Or() as IInstruction;
+				break;
+			case "xor":
+				retVal = new Xor() as IInstruction;
+				break;
+			case "neg":
+				retVal = new Neg() as IInstruction;
+				break;
+			case "not":
+				retVal = new Not() as IInstruction;
+				break;
+			case "goto":
+				retVal = new Goto(valToUse) as IInstruction;
+				break;
+			case "ifeq":
+				retVal = new If1(0, valToUse) as IInstruction;
+				break;
+			case "ifne":
+				retVal = new If1(1, valToUse) as IInstruction;
+				break;
+			case "iflt":
+				retVal = new If1(2, valToUse) as IInstruction;
+				break;
+			case "ifgt":
+				retVal = new If1(3, valToUse) as IInstruction;
+				break;
+			case "ifle":
+				retVal = new If1(4, valToUse) as IInstruction;
+				break;
+			case "ifge":
+				retVal = new If1(5, valToUse) as IInstruction;
+				break;
+			case "ifez":
+				retVal = new If2(0, valToUse) as IInstruction;
+				break;
+			case "ifnz":
+				retVal = new If2(1, valToUse) as IInstruction;
+				break;
+			case "ifmi":
+				retVal = new If2(2, valToUse) as IInstruction;
+				break;
+			case "ifpl":
+				retVal = new If2(3, valToUse) as IInstruction;
+				break;
+			case "dup":
+				retVal = new Dup(valToUse) as IInstruction;
+				break;
+			case "print":
+				retVal = new Print() as IInstruction;
+				break;
+			case "dump":
+				retVal = new Dump() as IInstruction;
+				break;
+			case "push":
+				retVal = new Push(valToUse) as IInstruction;
+				break;*/
+		}
+		return retVal;
 	}
 
 }

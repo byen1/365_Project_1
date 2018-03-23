@@ -1,16 +1,16 @@
 using System;
 
 public class Goto : IInstruction{
-	uint val;
+	int val;
 
-	public Goto(uint input){
+	public Goto(int input){
 		val = input;
 	}
 	public uint Val{
 		get{
-			uint retVal = 7 << 28; //0111
+			int retVal = 7 << 28; //0111
 			retVal = retVal | val; //assumes top 4 bits of Val are 0000
-			return retVal;
+			return (uint)retVal;
 		}
 	}
 }

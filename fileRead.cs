@@ -12,9 +12,6 @@ public class fileRead{
 		encodedInstrs = new List <IInstruction>();
 
 		labelsLocater(filename);
-//		foreach(KeyValuePair<string,Label> label in labels){
-//			Console.WriteLine($"Label: {label.Key} with address {label.Value.Address}");
-//		}
 		instructionExtractor(filename);
 
 	}
@@ -79,25 +76,31 @@ public class fileRead{
 				retVal = new Exit(valToUse) as IInstruction;
 				Console.WriteLine($"Hex Value of Exit 121: {retVal.Val,10:X8}");
 				break;
-			/*case "swap":
+			case "swap":
 				retVal = new Swap() as IInstruction;
+				Console.WriteLine($"Hex value of Swap: {retVal.Val,10:X8}");
 				break;
 			case "inpt":
 				retVal = new Inpt() as IInstruction;
+				Console.WriteLine($"Hex value of Inpt: {retVal.Val,10:X8}");
 				break;
 			case "nop":
 				retVal = new Nop() as IInstruction;
+				Console.WriteLine($"Hex value of Nop: {retVal.Val,10:X8}");
 				break;
 			case "pop":
 				retVal = new Pop() as IInstruction;
+				Console.WriteLine($"Hex value of Pop: {retVal.Val,10:X8}");
 				break;
 			case "add":
 				retVal = new Add() as IInstruction;
+				Console.WriteLine($"Hex value of Add: {retVal.Val,10:X8}");
 				break;
 			case "sub":
 				retVal = new Sub() as IInstruction;
+				Console.WriteLine($"Hex value of Sub: {retVal.Val,10:X8}");
 				break;
-			case "mul":
+			/*case "mul":
 				retVal = new Mul() as IInstruction;
 				break;
 			case "div":

@@ -21,13 +21,14 @@ Austyn:
 
 
 Charlie:
-	Read in
-	Makefile
-	Exit
-	Swap
-	Inpt
-	Nop
-	Pop
-	Add
-	Sub
+	Read in DONE
+	Makefile DONE
+	Exit DONE
+	Swap DONE
+	Inpt DONE (No test case)
+	Nop DONE
+	Pop DONE (No test case)
+	Add DONE
+	Sub DONE (No test case)
 	Output
+		-Endianness Swap????

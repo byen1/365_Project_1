@@ -9,8 +9,8 @@ public class Or : IInstruction
             uint retVal = 1 << 3;
             ++retVal;
             retVal <<= 1;
-			++retVal;
-			retVal <<= 25;
+            ++retVal;
+            retVal <<= 25;
             return retVal;
         }
     }

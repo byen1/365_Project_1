@@ -10,14 +10,14 @@ Brandon:
 	Neg
 
 Austyn:
-	Not
-	Goto
+	Not DONE 
+	Goto DONE
 	If[]
 	If[]
-	Dup
-	Print
-	Dump
-	Push
+	Dup DONE
+	Print DONE
+	Dump DONE
+	Push DONE
 
 
 Charlie:

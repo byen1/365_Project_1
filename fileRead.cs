@@ -29,7 +29,9 @@ public class fileRead{
 				Match match = Regex.Match(line,@"[\s]*([A-Za-z0-9\-]+):[\s]*$");
 				if(match.Success)
 					labels.Add(match.Groups[1].Value, new Label(match.Groups[1].Value,labelAddr));
-				labelAddr += 4;
+				else{
+					labelAddr += 4;
+				}
 			}
 		}
 	}
@@ -101,80 +103,96 @@ public class fileRead{
 				break;
 			case "mul":
 				retVal = new Mul() as IInstruction;
-				Console.WriteLine($"Hex value of mul: {retVal.Val,10:X8}");
+			//	Console.WriteLine($"Hex value of mul: {retVal.Val,10:X8}");
 				break;
 			case "div":
 				retVal = new Div() as IInstruction;
-				Console.WriteLine($"Hex value of div: {retVal.Val,10:X8}");
+			//	Console.WriteLine($"Hex value of div: {retVal.Val,10:X8}");
 				break;
 			case "rem":
 				retVal = new Rem() as IInstruction;
-				Console.WriteLine($"Hex value of rem: {retVal.Val,10:X8}");
+			//	Console.WriteLine($"Hex value of rem: {retVal.Val,10:X8}");
 				break;
 			case "and":
 				retVal = new And() as IInstruction;
-				Console.WriteLine($"Hex value of and: {retVal.Val,10:X8}");
+			//	Console.WriteLine($"Hex value of and: {retVal.Val,10:X8}");
 				break;
 			case "or":
 				retVal = new Or() as IInstruction;
-				Console.WriteLine($"Hex value of or: {retVal.Val,10:X8}");
+			//	Console.WriteLine($"Hex value of or: {retVal.Val,10:X8}");
 				break;
 			case "xor":
 				retVal = new Xor() as IInstruction;
-				Console.WriteLine($"Hex value of xor: {retVal.Val,10:X8}");
+			//	Console.WriteLine($"Hex value of xor: {retVal.Val,10:X8}");
 				break;
 			case "neg":
 				retVal = new Neg() as IInstruction;
-				Console.WriteLine($"Hex value of Neg: {retVal.Val,10:X8}");
+			//	Console.WriteLine($"Hex value of Neg: {retVal.Val,10:X8}");
 				break;
-			/*case "not":
+			case "not":
 				retVal = new Not() as IInstruction;
+				Console.WriteLine($"Hex value of not: {retVal.Val,10:X8}");
 				break;
 			case "goto":
 				retVal = new Goto(valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of goto: {retVal.Val,10:X8}");
 				break;
 			case "ifeq":
 				retVal = new If1(0, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of ifeq: {retVal.Val,10:X8}");
 				break;
 			case "ifne":
 				retVal = new If1(1, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of ifne: {retVal.Val,10:X8}");
 				break;
 			case "iflt":
 				retVal = new If1(2, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of iflt: {retVal.Val,10:X8}");
 				break;
 			case "ifgt":
 				retVal = new If1(3, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of ifgt: {retVal.Val,10:X8}");
 				break;
 			case "ifle":
 				retVal = new If1(4, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of ifle: {retVal.Val,10:X8}");
 				break;
 			case "ifge":
 				retVal = new If1(5, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of ifge: {retVal.Val,10:X8}");
 				break;
 			case "ifez":
 				retVal = new If2(0, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of ifez: {retVal.Val,10:X8}");
 				break;
 			case "ifnz":
 				retVal = new If2(1, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of ifnz: {retVal.Val,10:X8}");
 				break;
 			case "ifmi":
 				retVal = new If2(2, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of ifmi: {retVal.Val,10:X8}");
 				break;
 			case "ifpl":
 				retVal = new If2(3, valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of Ifpl: {retVal.Val,10:X8}");
 				break;
 			case "dup":
 				retVal = new Dup(valToUse) as IInstruction;
+				Console.WriteLine($"Hex value of Dup: {retVal.Val,10:X8}");
 				break;
 			case "print":
 				retVal = new Print() as IInstruction;
+				Console.WriteLine($"Hex value of Print: {retVal.Val,10:X8}");
 				break;
 			case "dump":
 				retVal = new Dump() as IInstruction;
+				Console.WriteLine($"Hex value of Dump: {retVal.Val,10:X8}");
 				break;
 			case "push":
 				retVal = new Push(valToUse) as IInstruction;
-				break;*/
+				Console.WriteLine($"Hex value of Push: {retVal.Val,10:X8}");
+				break;
 		}
 		return retVal;
 	}

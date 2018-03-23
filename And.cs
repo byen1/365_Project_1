@@ -9,8 +9,8 @@ public class And : IInstruction
             uint retVal = 1 << 3;
             ++retVal;
             retVal <<= 2;
-			++retVal;
-			retVal <<= 24;
+            ++retVal;
+            retVal <<= 24;
             return retVal;
         }
     }

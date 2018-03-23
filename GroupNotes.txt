@@ -32,3 +32,6 @@ Charlie:
 	Sub DONE (No test case)
 	Output
 		-Endianness Swap????
+		-Actually output in foreach loop
+		-Call fileWrite from Main
+		-Check if endianness is in correct order??

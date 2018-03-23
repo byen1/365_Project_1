@@ -13,7 +13,6 @@ public class fileRead{
 
 		labelsLocater(filename);
 		instructionExtractor(filename);
-
 	}
 
 	private void labelsLocater(string filename){
@@ -100,28 +99,35 @@ public class fileRead{
 				retVal = new Sub() as IInstruction;
 			//	Console.WriteLine($"Hex value of Sub: {retVal.Val,10:X8}");
 				break;
-			/*case "mul":
+			case "mul":
 				retVal = new Mul() as IInstruction;
+				Console.WriteLine($"Hex value of mul: {retVal.Val,10:X8}");
 				break;
 			case "div":
 				retVal = new Div() as IInstruction;
+				Console.WriteLine($"Hex value of div: {retVal.Val,10:X8}");
 				break;
 			case "rem":
 				retVal = new Rem() as IInstruction;
+				Console.WriteLine($"Hex value of rem: {retVal.Val,10:X8}");
 				break;
 			case "and":
 				retVal = new And() as IInstruction;
+				Console.WriteLine($"Hex value of and: {retVal.Val,10:X8}");
 				break;
 			case "or":
 				retVal = new Or() as IInstruction;
+				Console.WriteLine($"Hex value of or: {retVal.Val,10:X8}");
 				break;
 			case "xor":
 				retVal = new Xor() as IInstruction;
+				Console.WriteLine($"Hex value of xor: {retVal.Val,10:X8}");
 				break;
 			case "neg":
 				retVal = new Neg() as IInstruction;
+				Console.WriteLine($"Hex value of Neg: {retVal.Val,10:X8}");
 				break;
-			case "not":
+			/*case "not":
 				retVal = new Not() as IInstruction;
 				break;
 			case "goto":

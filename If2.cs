@@ -10,10 +10,10 @@ public class If2 : IInstruction{
 	}
 	public uint Val{
 		get{
-			int retVal = 9 << 28; //1001
+			int retVal = 9 <<  28; //1001
 			retVal = retVal | (cond << 24);
-			retVal = retVal | val; //assumes top 8 bits of Val are 0000 0000
-			return (uint)retVal;
+			retVal = retVal |  val; //assumes top 8 bits of Val are 0000 0000
+			return (uint) retVal;
 		}
 	}
 }

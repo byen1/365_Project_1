@@ -11,7 +11,6 @@ public class start{
 			Console.WriteLine($"Error: {ex.Message}");
 			return 1;
 		}
-
 		return 0;
 	}
 }

@@ -37,7 +37,7 @@ public class fileRead{
 	}
 
 	private void instructionExtractor(string filename){
-		int conversion, hexConv;
+		int conversion, hexConv, currentInstr = 0;
 		string command, arg, line;
 
 		using(var sr = new StreamReader(File.OpenRead(filename))){
@@ -54,23 +54,24 @@ public class fileRead{
 					arg = match.Groups[2].Value;
 					
 					if(Int32.TryParse(arg, out conversion)){
-						encodedInstrs.Add(createObject(command,conversion));
+						encodedInstrs.Add(createObject(command,conversion, currentInstr));
 					}else if(arg.Length > 2 && arg[0] == '0' && arg[1] == 'x'){
 						arg = arg.Substring(2);
 						if(Int32.TryParse(arg,System.Globalization.NumberStyles.HexNumber, null, out hexConv))
-							encodedInstrs.Add(createObject(command,hexConv));
+							encodedInstrs.Add(createObject(command,hexConv, currentInstr));
 					}else{
-						encodedInstrs.Add(createObject(command,labels[arg].Address));
+						encodedInstrs.Add(createObject(command,labels[arg].Address, currentInstr));
 					}
 				}else{ //The line is only one word
 					Match match2 = Regex.Match(line,@"[\s]*([A-Za-z0-9\-]+)[\s]*$");
-					encodedInstrs.Add(createObject(match2.Groups[1].Value,0));
+					encodedInstrs.Add(createObject(match2.Groups[1].Value,0,currentInstr));
 				}
+				currentInstr += 4;
 			}
 		}
 	}
 
-	private IInstruction createObject(string comm, int valToUse){
+	private IInstruction createObject(string comm, int valToUse, int currentInstruc){
 		IInstruction retVal = null;
 		switch(comm){
 			case "exit":
@@ -131,67 +132,67 @@ public class fileRead{
 				break;
 			case "not":
 				retVal = new Not() as IInstruction;
-				Console.WriteLine($"Hex value of not: {retVal.Val,10:X8}");
+		//		Console.WriteLine($"Hex value of not: {retVal.Val,10:X8}");
 				break;
 			case "goto":
 				retVal = new Goto(valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of goto: {retVal.Val,10:X8}");
+		//		Console.WriteLine($"Hex value of goto: {retVal.Val,10:X8}");
 				break;
 			case "ifeq":
-				retVal = new If1(0, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of ifeq: {retVal.Val,10:X8}");
+				retVal = new If1(0, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of ifeq: {retVal.Val,10:X8}");
 				break;
 			case "ifne":
-				retVal = new If1(1, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of ifne: {retVal.Val,10:X8}");
+				retVal = new If1(1, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of ifne: {retVal.Val,10:X8}");
 				break;
 			case "iflt":
-				retVal = new If1(2, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of iflt: {retVal.Val,10:X8}");
+				retVal = new If1(2, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of iflt: {retVal.Val,10:X8}");
 				break;
 			case "ifgt":
-				retVal = new If1(3, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of ifgt: {retVal.Val,10:X8}");
+				retVal = new If1(3, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of ifgt: {retVal.Val,10:X8}");
 				break;
 			case "ifle":
-				retVal = new If1(4, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of ifle: {retVal.Val,10:X8}");
+				retVal = new If1(4, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of ifle: {retVal.Val,10:X8}");
 				break;
 			case "ifge":
-				retVal = new If1(5, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of ifge: {retVal.Val,10:X8}");
+				retVal = new If1(5, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of ifge: {retVal.Val,10:X8}");
 				break;
 			case "ifez":
-				retVal = new If2(0, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of ifez: {retVal.Val,10:X8}");
+				retVal = new If2(0, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of ifez: {retVal.Val,10:X8}");
 				break;
 			case "ifnz":
-				retVal = new If2(1, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of ifnz: {retVal.Val,10:X8}");
+				retVal = new If2(1, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of ifnz: {retVal.Val,10:X8}");
 				break;
 			case "ifmi":
-				retVal = new If2(2, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of ifmi: {retVal.Val,10:X8}");
+				retVal = new If2(2, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of ifmi: {retVal.Val,10:X8}");
 				break;
 			case "ifpl":
-				retVal = new If2(3, valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of Ifpl: {retVal.Val,10:X8}");
+				retVal = new If2(3, valToUse, currentInstruc) as IInstruction;
+		//		Console.WriteLine($"Hex value of Ifpl: {retVal.Val,10:X8}");
 				break;
 			case "dup":
 				retVal = new Dup(valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of Dup: {retVal.Val,10:X8}");
+		//		Console.WriteLine($"Hex value of Dup: {retVal.Val,10:X8}");
 				break;
 			case "print":
 				retVal = new Print() as IInstruction;
-				Console.WriteLine($"Hex value of Print: {retVal.Val,10:X8}");
+		//		Console.WriteLine($"Hex value of Print: {retVal.Val,10:X8}");
 				break;
 			case "dump":
 				retVal = new Dump() as IInstruction;
-				Console.WriteLine($"Hex value of Dump: {retVal.Val,10:X8}");
+		//		Console.WriteLine($"Hex value of Dump: {retVal.Val,10:X8}");
 				break;
 			case "push":
 				retVal = new Push(valToUse) as IInstruction;
-				Console.WriteLine($"Hex value of Push: {retVal.Val,10:X8}");
+		//		Console.WriteLine($"Hex value of Push: {retVal.Val,10:X8}");
 				break;
 		}
 		return retVal;

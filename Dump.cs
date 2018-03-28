@@ -1,3 +1,15 @@
+/*
+ * CS365 Project 1
+ *
+ * Contributors:
+ * Austyn Simons
+ * Brandon Yen
+ * Charles Rizzo
+ *
+ * Dump.cs creates an object of type Dump that has a Val property. The Val property gets the byte encoding of the dump 
+ * command.
+ *
+ */
 using System;
 
 public class Dump : IInstruction{

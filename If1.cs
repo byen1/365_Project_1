@@ -1,3 +1,14 @@
+/*
+ * CS365 Project 1
+ *
+ * Contributors:
+ * Austyn Simons
+ * Brandon Yen
+ * Charles Rizzo
+ *
+ * If1.cs creates an object of type If1 that has a Val property. The Val property gets the byte encoding of the following 
+ * if commands: ifeq, ifne, iflt, ifgt, ifle, and ifge.
+ */
 using System;
 
 public class If1 : IInstruction{

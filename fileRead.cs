@@ -1,3 +1,15 @@
+/*
+*	CS365 Project 1
+*
+*	Contributors:
+*		Austyn Simons
+*		Brandon Yen
+*		Charles Rizzo
+*
+*	fileRead.cs creates an object of type fileRead and ultimately builds a list of IInstructions. It also constructs
+*	an internal dictionary of Labels in order to associate an address with each label in the file. 
+*
+*/
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -14,16 +26,19 @@ public class fileRead{
 		labelsLocater(filename);
 		instructionExtractor(filename);
 	}
-
+	
+	//Iterates through the file locating each label and creates a Label object for each one spotted. The label object
+	//and its name are then added to a dictionary of Label objects. Regex is used to extract the label names.
 	private void labelsLocater(string filename){
 		string line;
 		int labelAddr = 0;
-		using(var sr = new StreamReader(File.OpenRead(filename))){ //First pass through to get labels and "addresses"
+		using(var sr = new StreamReader(File.OpenRead(filename))){ 
 			while(sr.Peek() >= 0){
 				line = sr.ReadLine();
 				line = line.ToLower();
 			
-				if(line.Length == 0 || line[0] == '#' || (line[0] == '/' && line[1] == '/')) //Ignore the line
+				//Ignore line with the following conditions
+				if(line.Length == 0 || line[0] == '#' || (line[0] == '/' && line[1] == '/')) 
 					continue;
 				
 				Match match = Regex.Match(line,@"[\s]*([A-Za-z0-9\-]+):[\s]*$");
@@ -36,6 +51,9 @@ public class fileRead{
 		}
 	}
 
+	//This function uses Regex to get the Instruction and a possible argument from each line by stripping away a variable
+	//amount of whitespace. We try to parse the argument as an Int and a hex before concluding if its not either of those
+	//it must be a label.
 	private void instructionExtractor(string filename){
 		int conversion, hexConv, currentInstr = 0;
 		string command, arg, line;
@@ -45,7 +63,10 @@ public class fileRead{
 				line = sr.ReadLine();
 				line = line.ToLower();
 				
-				if(line.Length == 0 || line[0] == '#' || (line[0] == '/' && line[1] == '/') || line[line.Length - 1] == ':') //Ignore the line
+				//Ignore the line if any of the following conditions are met
+				if(line.Length == 0 || line[0] == '#' 
+					|| (line[0] == '/' && line[1] == '/') 
+						|| line[line.Length - 1] == ':') 
 					continue;
 
 				Match match = Regex.Match(line,@"([A-Za-z0-9\-]+)[\s]+([A-Za-z0-9\-]+)$",RegexOptions.IgnoreCase);
@@ -62,7 +83,7 @@ public class fileRead{
 					}else{
 						encodedInstrs.Add(createObject(command,labels[arg].Address, currentInstr));
 					}
-				}else{ //The line is only one word
+				}else{ //The line is only an instruction with no argument
 					Match match2 = Regex.Match(line,@"[\s]*([A-Za-z0-9\-]+)[\s]*$");
 					encodedInstrs.Add(createObject(match2.Groups[1].Value,0,currentInstr));
 				}
@@ -71,6 +92,9 @@ public class fileRead{
 		}
 	}
 
+	//This function actually creates the object associated with each Instruction by using a long switch statement. The object
+	//created is polymorphed up to an IInstruction and then returned from the function to be stored in the encodedInstrs list.
+	//Ugly? Very. Effective? Extremely.
 	private IInstruction createObject(string comm, int valToUse, int currentInstruc){
 		IInstruction retVal = null;
 		switch(comm){

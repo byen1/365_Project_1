@@ -1,19 +1,19 @@
 Duties:
 
 Brandon:
-	Mul
-	Div
-	Rem
-	And
-	Or
-	Xor
-	Neg
+	Mul DONE
+	Div DONE (No test case) Looks fine
+	Rem DONE (No test case) Looks fine
+	And DONE (No test case) Looks fine
+	Or DONE (No test case) Looks fine
+	Xor DONE (No test case) Looks fine
+	Neg DONE
 
 Austyn:
 	Not DONE 
 	Goto DONE
-	If[]
-	If[]
+	If[] DONE
+	If[] DONE
 	Dup DONE
 	Print DONE
 	Dump DONE
@@ -25,11 +25,11 @@ Charlie:
 	Makefile DONE
 	Exit DONE
 	Swap DONE
-	Inpt DONE (No test case)
+	Inpt DONE (No test case) Looks fine
 	Nop DONE
-	Pop DONE (No test case)
+	Pop DONE (No test case) Looks fine
 	Add DONE
-	Sub DONE (No test case)
+	Sub DONE (No test case) Looks fine
 	Output
 		-Endianness Swap????
 		-Actually output in foreach loop
